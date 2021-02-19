@@ -28,7 +28,7 @@ function! s:ReloadBrowser(browser, ...)
         redraw!
         exec 'sleep '.g:reloadDelay.'m'
     endif
-    
+
     exec "silent ! xdotool search --onlyvisible " l:searchArgs . l:activateCommand . " key 'ctrl+r'"
 
     if g:returnAppFlag
@@ -41,10 +41,20 @@ endfunction
 command! -nargs=? ChromeReload call s:ReloadBrowser("Chrome", <f-args>)
 if exists('g:reloadAll')
     command! -nargs=? -bar ChromeReloadStart ChromeReloadStop | autocmd BufWritePost *.php,*.js,*.html,*.css ChromeReload <args>
-    command! -bar ChromeReloadStop autocmd! BufWritePost *.php,*.js,*.html,*.css 
+    command! -bar ChromeReloadStop autocmd! BufWritePost *.php,*.js,*.html,*.css
 else
     command! -nargs=? -bar ChromeReloadStart ChromeReloadStop | autocmd BufWritePost <buffer> ChromeReload <args>
     command! -bar ChromeReloadStop autocmd! BufWritePost <buffer>
+endif
+
+" Brave
+command! -nargs=? BraveReload call s:ReloadBrowser("Brave", <f-args>)
+if exists('g:reloadAll')
+    command! -nargs=? -bar BraveReloadStart BraveReloadStop | autocmd BufWritePost *.php,*.js,*.html,*.css BraveReload <args>
+    command! -bar BraveReloadStop autocmd! BufWritePost *.php,*.js,*.html,*.css
+else
+    command! -nargs=? -bar BraveReloadStart BraveReloadStop | autocmd BufWritePost <buffer> BraveReload <args>
+    command! -bar BraveReloadStop autocmd! BufWritePost <buffer>
 endif
 
 " Chromium
@@ -68,6 +78,6 @@ command! -bar IceweaselReloadStart IceweaselReloadStop | autocmd BufWritePost <b
 command! -bar IceweaselReloadStop autocmd! BufWritePost <buffer>
 
 " All Browsers
-command! -bar AllBrowserReload silent OperaReload | FirefoxReload | ChromeReload | ChromiumReload | IceweaselReload
+command! -bar AllBrowserReload silent OperaReload | FirefoxReload | ChromeReload | ChromiumReload | IceweaselReload | BraveReload
 command! -bar AllBrowserReloadStart AllBrowserReloadStop | autocmd BufWritePost <buffer> AllBrowserReload
 command! -bar AllBrowserReloadStop autocmd! BufWritePost <buffer>
